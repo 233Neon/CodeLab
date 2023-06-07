@@ -1,0 +1,45 @@
+local CodeOutput = script.Parent.ScrollingFrame:WaitForChild("template")
+local LogService = game:GetService("LogService")
+local TextService = game:GetService("TextService")
+local index = 0
+local lastOutput = nil
+local los = nil
+local ntGotOut = 0
+
+LogService.MessageOut:Connect(function(message, messageType)
+	if lastOutput ~= nil and los ~= nil then
+		if message == los then
+			ntGotOut = ntGotOut + 1
+			lastOutput.Mesg.Text = los.." (x"..tostring(ntGotOut)..")"
+			los = message
+			return true
+		end
+	end
+	local newMsg = CodeOutput:Clone()
+	local Mesg = newMsg:WaitForChild("Mesg")
+	newMsg.Parent = script.Parent.ScrollingFrame
+	Mesg.Text = message
+	newMsg.Visible = true
+	index = index - 1
+	newMsg.LayoutOrder = index
+	newMsg.Frame.BackgroundColor3 = Color3.fromRGB(0, 145, 255)
+	if string.len(message) > 20 then
+		newMsg.Size += UDim2.fromScale(0, newMsg.Size.Y.Scale * (string.len(message) / 20))
+		string.sub(Mesg.Text, 1, 20)
+		--[[Mesg.Text = string.sub(Mesg.Text, 1, 20)..[[
+		
+		]]
+	end
+	if messageType == Enum.MessageType.MessageError then
+		Mesg.TextColor3 = Color3.fromRGB(255, 0, 4)
+	elseif messageType == Enum.MessageType.MessageWarning then
+		Mesg.TextColor3 = Color3.fromRGB(255, 217, 0)
+	elseif messageType == Enum.MessageType.MessageOutput then
+		Mesg.TextColor3 = Color3.fromRGB(255, 255, 255)
+	elseif messageType == Enum.MessageType.MessageInfo then
+		Mesg.TextColor3 = Color3.fromRGB(0, 176, 225)
+	end
+	lastOutput = newMsg
+	los = message
+	ntGotOut = 1
+end)

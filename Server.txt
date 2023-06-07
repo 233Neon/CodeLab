@@ -1,0 +1,17 @@
+
+game.ReplicatedStorage.Remotes.ToServer.OnServerEvent:Connect(function(plr, Message)
+	if Message:match("FireAllClients") then
+		game.ReplicatedStorage.Remotes.ClientFeedback:FireClient(plr, "You're not permitted to run 'FireAllClients' on CodeLab Servers!")
+		return true
+	elseif Message:match("FireClient") then
+		game.ReplicatedStorage.Remotes.ClientFeedback:FireClient(plr, "You're not permitted to run 'FireClient' on CodeLab Servers!")
+		return true
+	elseif Message:match("Kick") then
+		game.ReplicatedStorage.Remotes.ClientFeedback:FireClient(plr, "You're not permitted to run 'Kick' on CodeLab Servers!")
+		return true
+	elseif Message:match("Destroy") then
+		game.ReplicatedStorage.Remotes.ClientFeedback:FireClient(plr, "You're not permitted to run 'Destroy' on CodeLab Servers!")
+		return true
+	end
+	require(game.ReplicatedStorage.Loadstring)(Message)()
+end)

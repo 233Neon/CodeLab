@@ -1,0 +1,149 @@
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local mouse = game.Players.LocalPlayer:GetMouse()
+local uis = game:GetService("UserInputService")
+local selectionFrame = script.Parent
+
+local selectedTool = nil
+
+
+for i, v in pairs(selectionFrame:GetChildren()) do
+	if v:IsA("Frame") then
+		if v.Name == "Move" then
+			local button = v:WaitForChild("ImageButton")
+			
+			button.MouseButton1Click:Connect(function()
+				if selectedTool ~= "Move" then
+					for i, v2 in pairs(selectionFrame:GetChildren()) do
+						if v2:IsA("Frame") then
+							v2.ImageButton.ImageColor3 = Color3.fromRGB(33, 33, 33)
+						end
+					end
+					button.ImageColor3 = Color3.fromRGB(42, 42, 42)
+					selectedTool = "Move"
+				else
+					button.ImageColor3 = Color3.fromRGB(33, 33, 33)
+					selectedTool = nil
+				end
+			end)
+			
+			button.MouseEnter:Connect(function()
+				v.Size = UDim2.new(0.205, 0, 0.937, 0)
+			end)
+			
+			button.MouseLeave:Connect(function()
+				v.Size = UDim2.new(0.181, 0, 0.826, 0)
+			end)
+			
+		elseif v.Name == "Scale" then
+			
+			local button = v:WaitForChild("ImageButton")
+
+			button.MouseButton1Click:Connect(function()
+				if selectedTool ~= "Scale" then
+					for i, v2 in pairs(selectionFrame:GetChildren()) do
+						if v2:IsA("Frame") then
+							v2.ImageButton.ImageColor3 = Color3.fromRGB(33, 33, 33)
+						end
+					end
+					button.ImageColor3 = Color3.fromRGB(42, 42, 42)
+					selectedTool = "Scale"
+				else
+					button.ImageColor3 = Color3.fromRGB(33, 33, 33)
+					selectedTool = nil
+				end
+			end)
+
+			button.MouseEnter:Connect(function()
+				v.Size = UDim2.new(0.205, 0, 0.937, 0)
+			end)
+
+			button.MouseLeave:Connect(function()
+				v.Size = UDim2.new(0.181, 0, 0.826, 0)
+			end)
+			
+		elseif v.Name == "Rotate" then
+			
+			local button = v:WaitForChild("ImageButton")
+
+			button.MouseButton1Click:Connect(function()
+				if selectedTool ~= "Rotate" then
+					for i, v2 in pairs(selectionFrame:GetChildren()) do
+						if v2:IsA("Frame") then
+							v2.ImageButton.ImageColor3 = Color3.fromRGB(33, 33, 33)
+						end
+					end
+					button.ImageColor3 = Color3.fromRGB(42, 42, 42)
+					selectedTool = "Rotate"
+				else
+					button.ImageColor3 = Color3.fromRGB(33, 33, 33)
+					selectedTool = nil
+				end
+			end)
+
+			button.MouseEnter:Connect(function()
+				v.Size = UDim2.new(0.205, 0, 0.937, 0)
+			end)
+
+			button.MouseLeave:Connect(function()
+				v.Size = UDim2.new(0.181, 0, 0.826, 0)
+			end)
+			
+		elseif v.Name == "Select" then
+			
+			local button = v:WaitForChild("ImageButton")
+
+			button.MouseButton1Click:Connect(function()
+				if selectedTool ~= "Select" then
+					for i, v2 in pairs(selectionFrame:GetChildren()) do
+						if v2:IsA("Frame") then
+							v2.ImageButton.ImageColor3 = Color3.fromRGB(33, 33, 33)
+						end
+					end
+					button.ImageColor3 = Color3.fromRGB(42, 42, 42)
+					selectedTool = "Select"
+				else
+					button.ImageColor3 = Color3.fromRGB(33, 33, 33)
+					selectedTool = nil
+				end
+			end)
+
+			button.MouseEnter:Connect(function()
+				v.Size = UDim2.new(0.205, 0, 0.937, 0)
+			end)
+
+			button.MouseLeave:Connect(function()
+				v.Size = UDim2.new(0.181, 0, 0.826, 0)
+			end)
+			
+		elseif v.Name == "Part" then
+			
+			local button = v:WaitForChild("ImageButton")
+
+			button.MouseButton1Click:Connect(function()
+				if selectedTool ~= "Part" then
+					for i, v2 in pairs(selectionFrame:GetChildren()) do
+						if v2:IsA("Frame") then
+							v2.ImageButton.ImageColor3 = Color3.fromRGB(33, 33, 33)
+						end
+					end
+					button.ImageColor3 = Color3.fromRGB(42, 42, 42)
+					selectedTool = "Part"
+				else
+					button.ImageColor3 = Color3.fromRGB(33, 33, 33)
+					selectedTool = nil
+				end
+			end)
+
+			button.MouseEnter:Connect(function()
+				v.Size = UDim2.new(0.205, 0, 0.937, 0)
+			end)
+
+			button.MouseLeave:Connect(function()
+				v.Size = UDim2.new(0.181, 0, 0.826, 0)
+			end)
+			
+ 		end
+	end
+end

@@ -1,0 +1,100 @@
+local CodeInput = script.Parent:WaitForChild("Input")
+local LogService = game:GetService("LogService")
+local Uis = game:GetService("UserInputService")
+
+--local vm = require(game.ReplicatedStorage.Loadstring)
+
+
+local Margin = script.Parent
+local Input = CodeInput
+local Display = Margin.Display
+
+local Colors = {
+	[Color3.fromRGB(248, 109, 124)] = {
+		"local",
+		"function",
+		"return",
+		"game",
+		"print",
+		"error",
+		"while",
+		"do",
+		"if",
+		"then",
+		"end"
+	},
+
+	[Color3.fromRGB(0, 195, 255)] = {
+		"script",
+		"Players",
+		"script",
+		"game",
+		"workspace",
+		"Workspace",
+		"math",
+		"wait"
+	},
+	
+	[Color3.fromRGB(0, 98, 255)] = {
+		"Parent"
+	},
+	
+	[Color3.fromRGB(255, 204, 0)] = {
+		"Connect",
+		"true",
+		"false",
+		"IsLoaded",
+		"GetPropertyChangedSignal",
+		"FindFirstChild",
+		"WaitForChild",
+		"Destroy",
+		"Remove"
+	},
+}
+
+repeat wait() until game:IsLoaded()
+
+local ColorizePattern = '<font color=\"rgb(%d, %d, %d)\">%s</font>'
+
+local function Colorize(keyword, color)
+	return string.format(ColorizePattern, color.r*255, color.g*255, color.b*255, keyword)
+end
+
+local function ProcessText(text)
+	for color, keywords in pairs(Colors) do
+		for _, keyword in pairs(keywords) do
+			text = string.gsub(text, keyword, Colorize(keyword, color))
+		end
+	end
+	return text
+end
+
+local function InputChanged()
+	local text = Input.Text
+	Display.Text = ProcessText(text)
+end
+
+Input:GetPropertyChangedSignal("Text"):Connect(InputChanged)
+
+local isFocused = false
+
+local function LoseFocus()
+	wait(.1)
+	isFocused = false
+end
+
+Input.Focused:Connect(function()
+	isFocused = true
+	Margin.BorderColor3 = Color3.fromRGB(0, 208, 255)
+end)
+
+Input.FocusLost:Connect(function()
+	Margin.BorderColor3 = Color3.fromRGB(0, 0.815686, 1)
+	spawn(LoseFocus)
+end)
+
+Uis.InputBegan:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode.Return and isFocused == true then
+		require(game.ReplicatedStorage.Loadstring)(CodeInput.Text)()
+	end
+end)
